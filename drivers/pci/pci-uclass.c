@@ -581,6 +581,11 @@ int pci_generic_mmap_write_config(
 	if (addr_f(bus, bdf, offset, &address) < 0)
 		return 0;
 
+    if (!IS_ENABLED(CONFIG_SYS_PCI_64BIT) && upper_32_bits((uintptr_t)address)) {
+        debug(" - beyond the 32-bit boundary, ignoring\n");
+		return -EINVAL;
+	}
+
 	switch (size) {
 	case PCI_SIZE_8:
 		writeb(value, address);
@@ -610,6 +615,12 @@ int pci_generic_mmap_read_config(
 	if (addr_f(bus, bdf, offset, &address) < 0) {
 		*valuep = pci_get_ff(size);
 		return 0;
+	}
+
+
+	if (!IS_ENABLED(CONFIG_SYS_PCI_64BIT) && upper_32_bits((uintptr_t)address)) {
+        debug(" - beyond the 32-bit boundary, ignoring\n");
+		return -EINVAL;
 	}
 
 	switch (size) {
