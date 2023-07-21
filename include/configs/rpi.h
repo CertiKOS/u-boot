@@ -162,7 +162,7 @@
 #define ENV_MEM_LAYOUT_SETTINGS \
 	"fdt_high=" FDT_HIGH "\0" \
 	"initrd_high=" INITRD_HIGH "\0" \
-	"kernel_addr_r=0x00080000\0" \
+	"kernel_addr_r=0x10000000\0" \
 	"scriptaddr=0x02400000\0" \
 	"pxefile_addr_r=0x02500000\0" \
 	"fdt_addr_r=0x02600000\0" \
